@@ -27,11 +27,21 @@ const UserCard: React.FC<UserProps> = ({
       <strong>Website:</strong> {website}
     </p>
     <p className="text-gray-600 mb-1">
-      <strong>Address:</strong> {address.suite}, {address.street}, {address.city}
+      <strong>Address:</strong>{" "}
+      {address
+        ? `${address.suite}, ${address.street}, ${address.city}`
+        : "N/A"}
     </p>
     <p className="text-gray-600">
-      <strong>Company:</strong> {company.name} <br />
-      <span className="italic">{company.catchPhrase}</span>
+      <strong>Company:</strong>{" "}
+      {company ? (
+        <>
+          {company.name} <br />
+          <span className="italic">{company.catchPhrase}</span>
+        </>
+      ) : (
+        "N/A"
+      )}
     </p>
   </div>
 );
