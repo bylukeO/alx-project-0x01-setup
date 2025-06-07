@@ -1,34 +1,39 @@
-import React from 'react';
-import PostCard from '../../components/common/PostCard';
-import Header from '@/components/layout/Header';
+import PostCard from "@/components/common/PostCard";
+import Header from "@/components/layout/Header";
+import { PostProps } from "@/interfaces";
 
-const PostsPage = () => {
-    const posts = [
-        {
-            title: 'First Post',
-            content: 'This is the content of the first post.',
-            author: 'Author One'
-        },
-        {
-            title: 'Second Post',
-            content: 'This is the content of the second post.',
-            author: 'Author Two'
-        }
-    ];
-
-    return (
-        <div>
-            <h1>Posts</h1>
-            {posts.map((post, index) => (
-                <PostCard 
-                    key={index} 
-                    title={post.title} 
-                    content={post.content} 
-                    author={post.author} 
-                />
-            ))}
+const Posts: React.FC<PostProps[]> = ({ posts }) => {
+  console.log(posts)
+  return (
+    <div className="flex flex-col h-screen">
+      <Header />
+      <main className="p-4">
+        <div className="flex justify-between">
+        <h1 className=" text-2xl font-semibold">Post Content</h1>
+        <button className="bg-blue-700 px-4 py-2 rounded-full text-white">Add Post</button>
         </div>
-    );
-};
+        <div className="grid grid-cols-3 gap-2 ">
+          {
+            posts?.map(({ title, body, userId, id }: PostProps, key: number) => (
+              <PostCard title={title} body={body} userId={userId} id={id} key={key} />
+            ))
+          }
+        </div>
+      </main>
+    </div>
+  )
+}
 
-export default PostsPage;
+
+export async function getStaticProps() {
+  const response = await fetch("https://jsonplaceholder.typicode.com/posts")
+  const posts = await response.json()
+
+  return {
+    props: {
+      posts
+    }
+  }
+}
+
+export default Posts;
