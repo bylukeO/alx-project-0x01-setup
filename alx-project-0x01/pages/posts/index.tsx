@@ -1,5 +1,6 @@
 import React from 'react';
 import PostCard from '../../components/common/PostCard';
+import Header from '@/components/layout/Header';
 
 const PostsPage = () => {
     const posts = [
